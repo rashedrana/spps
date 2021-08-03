@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <title>Github Users</title>
+      <style>
+            body{
+                  padding-left: 2in;
+                  padding-right: 5in;
+                  font-family: 'Times New Roman', Times, serif;
+                  font-size: x-large;
+            }
+            ul{
+                  list-style: none;
+                  background-color: rgb(243, 243, 243);
+                  padding-top: 25px;
+            }
+      </style>
+</head>
+<body>
+      <br>
+      <button id="fetch">Load Github Users</button>
+      <h1>Github Users</h1>
+      <section id="info"></section>
+      <script>
+            document.getElementById('fetch').addEventListener('click', load);
+            function load(){
+                  var req = new XMLHttpRequest();
+                  req.open('GET', 'https://api.github.com/users');
+                  req.onload = function(){
+                        if(req.status == 200){
+                              var people = JSON.parse(req.responseText);
+                              var output= ' ';
+                              for(var i in people){
+                              output +=
+                              '<div>' +
+                              '<ul>' +
+                              '<li><img src="'+people[i].avatar_url+'"width="150px" height="150px"></li>' +
+                              '<br>' +
+                              '<li>ID: '+people[i].id+'</li>' +
+                              '<li>Login: '+people[i].login+'</li>' +
+                              '<br>' +
+                              '</ul>' +
+                              '</div>';
+                              }
+                              document.getElementById('info').innerHTML = output;
+                        }
+                  }
+                  req.send();
+            }
+      </script>
+</body>
+</html>
